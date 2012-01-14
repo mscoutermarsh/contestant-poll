@@ -59,14 +59,14 @@ get '/confirm/:id/:answer/?' do
   if vote_to_check then
     if vote_to_check.answer.to_i == params[:answer].to_i then
       vote_to_check.update(:validvote => true)
-      hash['message'] = "Thanks for voting!"
+      output['message'] = "Thanks for voting!"
     else
-      hash['message'] = "Oops, wrong answer."
+      output['message'] = "Oops, wrong answer."
     end
   else
-    hash['message'] = "no, no, no..."
+    output['message'] = "no, no, no..."
   end
 
   content_type "json"
-  hash.to_json
+  output.to_json
 end
