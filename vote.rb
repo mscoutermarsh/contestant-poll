@@ -39,23 +39,34 @@ get '/vote/:contestant/?' do
   int2 = 1 + rand(3)
   answer = int1 + int2
 
+  # create new vote
   @newVote = Vote.create(:contestant => params[:contestant], :created_at => Time.now, :answer=>answer, :validvote=>false, :ip=>@env['REMOTE_ADDR'])
   
+  # return security question and ID.
   output = Hash.new
   output['question'] = "What is #{int1}+#{int2}?"
   output['id'] = "#{@newVote.id}"
 
-  content_type "text"
+  content_type "json"
   output.to_json
 end
 
 get '/confirm/:id/:answer/?' do
-  vote = Vote.filter(id => params[:id])
+  output = Hash.new
 
-  if vote.answer == params[:answer] then
-    vote.update(:validvote => true)
-    "Thanks for voting!"
+  #answer to security question. If correct... vote is valid!
+  vote_to_check = Vote.get(params[:id])
+  if vote_to_check then
+    if vote_to_check.answer.to_i == params[:answer].to_i then
+      vote_to_check.update(:validvote => true)
+      hash['message'] = "Thanks for voting!"
+    else
+      hash['message'] = "Oops, wrong answer."
+    end
   else
-    "Oops, wrong answer."
+    hash['message'] = "no, no, no..."
   end
+
+  content_type "json"
+  hash.to_json
 end
