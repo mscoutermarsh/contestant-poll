@@ -1,13 +1,10 @@
 Contestant Poll API
 ===========================
-mscoutermarsh
-
-**Purpose:** 
-API for tracking votes. To limit cheating, instead of using a captcha, use simple math!
+An API for tracking votes. To limit cheating, instead of using a captcha, use simple math!
 
 API is all contained within *votes.rb.*
 
-An example of how it could be implemented is in the public folder.  
+An example of how it could be implemented is in the public folder.    
 **See it running on Heroku:** [HTML/JavaScript Implementation](http://voteAPI.heroku.com/vote.html "voteAPI")
 
 For a vote to be valid is must be created and then confirmed (by answering a simple math problem).
