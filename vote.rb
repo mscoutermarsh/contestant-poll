@@ -22,15 +22,14 @@ class Vote
   property :answer,      Integer 
 end
 
-@referrer = ENV['ALLOWED_REF']
 
 helpers do
   def validateVote(answer, question)
     ((question[0].to_i + question[1].to_i) == answer)
   end
 
-  def checkReferrer()
-    request.referer.match(@referrer)
+  def checkReferer()
+    request.referer.match(ENV['ALLOWED_REF'])
   end
 end
 
@@ -38,7 +37,7 @@ end
 DataMapper.finalize
 
 post '/vote/:contestant/?' do
-  if checkReferrer() then
+  if checkReferer() then
     # ask the user some simple math
     int1 = 1 + rand(8)
     int2 = 1 + rand(3)
@@ -61,7 +60,7 @@ post '/vote/:contestant/?' do
 end
 
 post '/confirm/:id/:answer/?' do
-  if checkReferrer() then
+  if checkReferer() then
     output = Hash.new
 
     #answer to security question. If correct... vote is valid!
