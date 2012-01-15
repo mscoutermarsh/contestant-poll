@@ -29,7 +29,12 @@ helpers do
   end
 
   def checkReferer()
-    request.referer.match(ENV['ALLOWED_REF'])
+    # if referer security ENV defined... check it!
+    if ENV['ALLOWED_REF'] then
+        request.referer.match(ENV['ALLOWED_REF'])
+    else
+      true
+    end
   end
 end
 
@@ -37,6 +42,8 @@ end
 DataMapper.finalize
 
 post '/vote/:contestant/?' do
+  content_type "json"
+
   if checkReferer() then
     # ask the user some simple math
     int1 = 1 + rand(8)
@@ -51,15 +58,17 @@ post '/vote/:contestant/?' do
     output['question'] = "What is #{int1}+#{int2}?"
     output['id'] = "#{@newVote.id}"
 
-    content_type "json"
     output.to_json
   else
     status(403)
-    "no, no, no..."
+    output['message'] = "no, no, no..."
+    output.to_json
   end
 end
 
 post '/confirm/:id/:answer/?' do
+  content_type "json"
+
   if checkReferer() then
     output = Hash.new
 
@@ -78,11 +87,11 @@ post '/confirm/:id/:answer/?' do
       output['message'] = "no, no, no..."
     end
 
-    content_type "json"
     output.to_json
   else
     status(403)
-    "no, no, no..."
+    output['message'] = "no, no, no..."
+    output.to_json
   end
 end
 
