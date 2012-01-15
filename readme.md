@@ -8,13 +8,14 @@ API for tracking votes. To limit cheating, instead of using a captcha, use simpl
 API is all contained within *votes.rb.*
 
 An example of how it could be implemented is in the public folder.
+See it running on Heroku: [HTML/JavaScript Implementation](http://voteAPI.heroku.com/vote.html "voteAPI")
 
 For a vote to be valid is must be created and then confirmed (by answering a simple math problem).
 
-**Setup:** Before running you must do the following:
+**Setup:** Before running you must do the following:  
 + Define ENV variable VOTECONN. This is the connection string to your database.
 + *Optional:* Define ENV variable ALLOW_REF with the domain you want to limit requests from.
-++ Example: ALLOWED_REF=voteAPI.heroku.com will only allow record votes if the referer is from the specified domain.
++ Example: ALLOWED_REF=voteAPI.heroku.com will only allow record votes if the referer is from the specified domain.
 
 
 
