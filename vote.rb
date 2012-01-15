@@ -22,7 +22,7 @@ class Vote
   property :answer,      Integer 
 end
 
-@referrer = ENV['ALLOWEDREF']
+@referrer = ENV['ALLOWED_REF']
 
 helpers do
   def validateVote(answer, question)
