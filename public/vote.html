@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+
+    <title>Contest VOTE API</title>
+
+    <!-- CSS  -->
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <script>
+    function updateVotes(){
+        $.ajax({
+             type: "GET",
+             url: "votes/1",
+             success: function(data) {
+                $("#votes1").html(data.votes + " Votes");
+             },
+             error: function(data) {
+
+             }
+        });
+        $.ajax({
+             type: "GET",
+             url: "votes/2",
+             success: function(data) {
+                $("#votes2").html(data.votes + " Votes");
+             },
+             error: function(data) {
+
+             }
+        });
+        $.ajax({
+             type: "GET",
+             url: "votes/3",
+             success: function(data) {
+                $("#votes3").html(data.votes + " Votes");
+             },
+             error: function(data) {
+
+             }
+        });
+    }
+
+    $(document).ready(function() {
+
+        var voteid=0;
+
+        // load vote counts
+        updateVotes();
+
+        $("#confirm1").hide();
+        $("#message1").hide();
+
+        $("#confirm2").hide();
+        $("#message2").hide();
+
+        $("#confirm3").hide();
+        $("#message3").hide();
+             
+        $('#contestant1').click(function(event) {
+          event.preventDefault();
+          if(!$('#contestant1').hasClass('disabled')){
+              $("#contestant1").hide();
+              $("#contestant2").addClass('disabled');
+              $("#contestant3").addClass('disabled');
+
+              $.ajax({
+                 type: "POST",
+                 url: "vote/1/",
+                 success: function(data) {
+                    $("#question1").html(data.question);
+                    voteid = data.id;
+                    $("#confirm1").show();
+                 },
+                 error: function(data) {
+                   alert("error");
+                 }
+           });
+            }
+        });
+
+         $('#submitMath1').click(function(event) {
+          event.preventDefault();
+          $("#confirm1").hide();
+
+
+          $.ajax({
+             type: "POST",
+             url: "confirm/"+voteid+"/" + $("#math1").val(),
+             success: function(data) {
+                $("#confirm1").html(data.message);
+                $("#confirm1").show('fast');
+                updateVotes();
+             },
+             error: function(data) {
+                $("#confirm1").hide();
+                var obj = jQuery.parseJSON(data.responseText);
+                $("#message1").html(obj.message);
+                $("#message1").show('fast');
+                setTimeout(function() {$('#message1').hide();$('#confirm1').show();} , 2100);
+             }
+           });
+        });
+
+        $('#contestant2').click(function(event) {
+          event.preventDefault();
+          if(!$('#contestant2').hasClass('disabled')){
+              $("#contestant2").hide();
+              $("#contestant1").addClass('disabled');
+              $("#contestant3").addClass('disabled');
+
+              $.ajax({
+                 type: "POST",
+                 url: "vote/2/",
+                 success: function(data) {
+                    $("#question2").html(data.question);
+                    voteid = data.id;
+                    $("#confirm2").show();
+                 },
+                 error: function(data) {
+                   alert("error");
+                 }
+           });
+            }
+        });
+
+         $('#submitMath2').click(function(event) {
+          event.preventDefault();
+          $("#confirm2").hide();
+
+          $.ajax({
+             type: "POST",
+             url: "confirm/"+voteid+"/" + $("#math2").val(),
+             success: function(data) {
+                $("#confirm2").html(data.message);
+                $("#confirm2").show('fast');
+                updateVotes();
+             },
+             error: function(data) {
+                $("#confirm2").hide();
+                var obj = jQuery.parseJSON(data.responseText);
+                $("#message2").html(obj.message);
+                $("#message2").show('fast');
+                setTimeout(function() {$('#message2').hide();$('#confirm2').show();} , 2100);
+             }
+           });
+        });
+
+        $('#contestant3').click(function(event) {
+          event.preventDefault();
+          if(!$('#contestant3').hasClass('disabled')){
+              $("#contestant3").hide();
+              $("#contestant1").addClass('disabled');
+              $("#contestant2").addClass('disabled');
+
+              $.ajax({
+                 type: "POST",
+                 url: "vote/3/",
+                 success: function(data) {
+                    $("#question3").html(data.question);
+                    voteid = data.id;
+                    $("#confirm3").show();
+                 },
+                 error: function(data) {
+                   alert("error");
+                 }
+           });
+           }
+        });
+
+         $('#submitMath3').click(function(event) {
+          event.preventDefault();
+          $("#confirm1").hide();
+
+          $.ajax({
+             type: "POST",
+             url: "confirm/"+voteid+"/" + $("#math3").val(),
+             success: function(data) {
+                $("#confirm3").html(data.message);
+                $("#confirm3").show('fast');
+                updateVotes();
+             },
+             error: function(data) {
+                $("#confirm3").hide();
+                var obj = jQuery.parseJSON(data.responseText);
+                $("#message3").html(obj.message);
+                $("#message3").show('fast');
+                setTimeout(function() {$('#message3').hide();$('#confirm3').show();} , 2100);
+             }
+           });
+        });
+
+    });   
+    </script>
+    <style>
+    .contestant {
+        text-align: center;
+    }
+    h2 {
+       position: absolute;
+       top: 200px;
+       left: 0;
+       width: 100%;
+       text-align: left;
+    }
+    h2 span {
+       color: white;
+       font: bold 24px/45px Helvetica, Sans-Serif;
+       letter-spacing: -1px;
+       background: rgb(0, 0, 0); /* fallback color */
+       background: rgba(0, 0, 0, 0.7);
+       padding: 10px;
+       text-align: left;
+    }
+    .image {
+   position: relative;
+   text-align: left;
+   width: 100%; /* for IE 6 */
+}
+    </style>
+
+
+  </head>
+  <body>
+    <table style="width: 900px; text-align:center;">
+          <tbody><tr>
+            <td align="center" class="contestant">Joe Smith (<a href="#">See his story</a>)</br>
+              <br>
+              <div class="image">
+
+                 <img src="contestant1.jpg" alt="1" width="300" height="282">
+
+                  <h2><span id="votes1"></span></h2>
+
+                 </div> 
+             </br>
+              <div id="submit1">
+                <input id="contestant1" type="submit" class="btn" value="Vote for Joe!" />
+                <div id="confirm1">
+                    <span id="question1"></span>
+                    <input class="medium" id="math1" name="math1" maxlength="2" size="2" style="width: 50px;" type="text"> <input id="submitMath1" type="submit" class="btn" value="Submit your vote!" />
+                </div>
+                <div id="message1"></div>
+            </div>
+            </td>
+            
+            <td align="center" class="contestant">Rhi Mogan (<a href="#">See her story</a>)</br>
+              <br>
+              <div class="image">
+
+                 <img src="contestant2.jpg" alt="2" width="300" height="282">
+
+                  <h2><span id="votes2"></span></h2>
+
+                 </div> 
+             </br>
+              <div id="submit2">
+                <input id="contestant2" type="submit" class="btn" value="Vote for Rhi!" />
+                <div id="confirm2">
+                    <span id="question2"></span>
+                    <input class="medium" id="math2" name="math2" maxlength="2" size="2" style="width: 50px;" type="text"> <input id="submitMath2" type="submit" class="btn" value="Submit your vote!" />
+                </div>
+                <div id="message2"></div>
+            </div>
+            </td>
+
+            <td align="center" class="contestant">Christina Flowers (<a href="#">See her story</a>)</br>
+              <br>
+              <div class="image">
+
+                 <img src="contestant3.jpg" alt="3" width="300" height="282">
+
+                  <h2><span id="votes3"></span></h2>
+
+                 </div> 
+             </br>
+              <div id="submit3">
+                <input id="contestant3" type="submit" class="btn" value="Vote for Christina!" />
+                <div id="confirm3">
+                    <span id="question3"></span>
+                    <input class="medium" id="math3" name="math3" maxlength="2" size="2" style="width: 50px;" type="text"> <input id="submitMath3" type="submit" class="btn" value="Submit your vote!" />
+                </div>
+                <div id="message3"></div>
+            </div>
+            </td>
+
+          </tr>
+        </tbody>
+    </table>
+
+  </body>
+  </html>

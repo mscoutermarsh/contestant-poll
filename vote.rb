@@ -31,9 +31,7 @@ end
 
 DataMapper.finalize
 
-
-
-get '/vote/:contestant/?' do
+post '/vote/:contestant/?' do
   # ask the user some simple math
   int1 = 1 + rand(8)
   int2 = 1 + rand(3)
@@ -51,7 +49,7 @@ get '/vote/:contestant/?' do
   output.to_json
 end
 
-get '/confirm/:id/:answer/?' do
+post '/confirm/:id/:answer/?' do
   output = Hash.new
 
   #answer to security question. If correct... vote is valid!
@@ -61,10 +59,28 @@ get '/confirm/:id/:answer/?' do
       vote_to_check.update(:validvote => true)
       output['message'] = "Thanks for voting!"
     else
+      status(400)
       output['message'] = "Oops, wrong answer."
     end
   else
+    status(400)
     output['message'] = "no, no, no..."
+  end
+
+  content_type "json"
+  output.to_json
+end
+
+# return number of votes
+get '/votes/:contestant/?' do
+  output = Hash.new
+
+  votes = Vote.all(:contestant => params[:contestant], :validvote=>true)
+
+  if votes then
+    output['votes'] = votes.count.to_s
+  else
+    output['votes'] = "0"
   end
 
   content_type "json"
