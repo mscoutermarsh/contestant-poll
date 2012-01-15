@@ -48,6 +48,7 @@ DataMapper.finalize
 
 post '/vote/:contestant/?' do
   content_type "json"
+  output = Hash.new
 
   if checkReferer() then
     # ask the user some simple math
@@ -59,7 +60,6 @@ post '/vote/:contestant/?' do
     @newVote = Vote.create(:contestant => params[:contestant], :created_at => Time.now, :answer=>answer, :validvote=>false, :ip=>@env['REMOTE_ADDR'])
     
     # return security question and ID.
-    output = Hash.new
     output['question'] = "What is #{int1}+#{int2}?"
     output['id'] = "#{@newVote.id}"
 
@@ -73,9 +73,9 @@ end
 
 post '/confirm/:id/:answer/?' do
   content_type "json"
+  output = Hash.new
 
   if checkReferer() then
-    output = Hash.new
 
     #answer to security question. If correct... vote is valid!
     vote_to_check = Vote.get(params[:id])
