@@ -3,5 +3,5 @@ require "bundler"
 
 Bundler.require
 
-require "./votes"
+require "vote.rb"
 run Sinatra::Application
