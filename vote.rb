@@ -31,7 +31,12 @@ helpers do
   def checkReferer()
     # if referer security ENV defined... check it!
     if ENV['ALLOWED_REF'] then
+      if request.referer then
         request.referer.match(ENV['ALLOWED_REF'])
+      else
+        # no referer defined... most likely coming from curl...etc...
+        false
+      end
     else
       true
     end
