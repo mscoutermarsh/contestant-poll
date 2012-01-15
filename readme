@@ -2,17 +2,17 @@ Contestant Poll API
 ===========================
 mscoutermarsh
 
-Purpose: API for tracking votes. Votes require math captcha.
+**Purpose:** API for tracking votes. To limit cheating, instead of using a captcha, use simple math!
 
-In the public folder is an HTML/JavaScript implementation of the API.
+API is all contained within votes.rb.
 
-Documentation
--------------
+An example of how it could be implemented is in the public folder.
 
-Each Vote contains the following:
 
-+   id (Integer)
 
+
+API Documentation
+============================
 
 POST
 ----
