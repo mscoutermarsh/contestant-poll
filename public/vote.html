@@ -86,7 +86,9 @@
 
          $('#submitMath1').click(function(event) {
           event.preventDefault();
-          $("#confirm1").hide();
+          if ($("#math1").val()) {
+               $("#confirm1").hide();
+          }
 
 
           $.ajax({
@@ -131,7 +133,9 @@
 
          $('#submitMath2').click(function(event) {
           event.preventDefault();
-          $("#confirm2").hide();
+          if ($("#math2").val()) {
+               $("#confirm2").hide();
+          }
 
           $.ajax({
              type: "POST",
@@ -175,7 +179,9 @@
 
          $('#submitMath3').click(function(event) {
           event.preventDefault();
-          $("#confirm1").hide();
+          if ($("#math3").val()) {
+               $("#confirm3").hide();
+          }
 
           $.ajax({
              type: "POST",
