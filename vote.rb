@@ -71,16 +71,22 @@ post '/vote/:contestant/?' do
   end
 end
 
-post '/confirm/:id/:answer/?' do
+post '/confirm/:id/:answer?/?' do
   content_type "json"
   output = Hash.new
+
+  answer = params[:answer]
+
+  if not answer then
+    answer = 0
+  end
 
   if checkReferer() then
 
     #answer to security question. If correct... vote is valid!
     vote_to_check = Vote.get(params[:id])
     if vote_to_check then
-      if vote_to_check.answer.to_i == params[:answer].to_i then
+      if vote_to_check.answer.to_i == answer.to_i then
         vote_to_check.update(:validvote => true)
         output['message'] = "Thanks for voting!"
       else
