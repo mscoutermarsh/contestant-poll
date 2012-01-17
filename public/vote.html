@@ -16,6 +16,7 @@
     function updateVotes(){
         $.ajax({
              type: "GET",
+             cache: false,
              url: "votes/1",
              success: function(data) {
                 $("#votes1").html(data.votes + " Votes");
@@ -26,6 +27,7 @@
         });
         $.ajax({
              type: "GET",
+             cache: false,
              url: "votes/2",
              success: function(data) {
                 $("#votes2").html(data.votes + " Votes");
@@ -36,6 +38,7 @@
         });
         $.ajax({
              type: "GET",
+             cache: false,
              url: "votes/3",
              success: function(data) {
                 $("#votes3").html(data.votes + " Votes");
