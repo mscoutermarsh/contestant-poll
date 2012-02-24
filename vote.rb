@@ -43,6 +43,10 @@ helpers do
   end
 end
 
+get '/ref' do
+  request.referer
+end
+
 
 DataMapper.finalize
 
