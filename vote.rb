@@ -46,7 +46,7 @@ end
 
 get '/ref' do
   output = Hash.new
-  output['ref'] = request.referrer
+  output['ref'] = request.referer
   output['host'] = request.host
   output.to_json
 end
