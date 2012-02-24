@@ -51,7 +51,7 @@ post '/vote/:contestant/?' do
   output = Hash.new
 
   if checkReferer() then
-    # ask the user some simple math
+    # ask the user simple math
     int1 = 1 + rand(8)
     int2 = 1 + rand(3)
     answer = int1 + int2
