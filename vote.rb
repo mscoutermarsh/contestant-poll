@@ -44,7 +44,9 @@ helpers do
 end
 
 get '/ref' do
-  request.referer
+  output = Hash.new
+  output['ref]' = request.referer
+  output.to_json
 end
 
 
