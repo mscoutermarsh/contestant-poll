@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/base'
 require 'data_mapper'
 require 'json'
 
