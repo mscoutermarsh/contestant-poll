@@ -28,13 +28,13 @@ helpers do
     ((question[0].to_i + question[1].to_i) == answer)
   end
 
-  def checkReferer()
-    # if referer security ENV defined... check it!
+  def checkReferrer()
+    # if referrer security ENV defined... check it!
     if ENV['ALLOWED_REF'] then
-      if request.referer then
-        request.referer.match(ENV['ALLOWED_REF'])
+      if request.referrer.match(ENV['ALLOWED_REF']) then
+        true
       else
-        # no referer defined... most likely coming from curl...etc...
+        # no referrer defined... most likely coming from curl...etc...
         false
       end
     else
@@ -45,7 +45,7 @@ end
 
 get '/ref' do
   output = Hash.new
-  output['ref'] = request.referer
+  output['ref'] = request.referrer
   output.to_json
 end
 
@@ -56,7 +56,7 @@ post '/vote/:contestant/?' do
   content_type "json"
   output = Hash.new
 
-  if checkReferer() then
+  if checkReferrer() then
     # ask the user simple math
     int1 = 1 + rand(8)
     int2 = 1 + rand(3)
@@ -87,7 +87,7 @@ post '/confirm/:id/:answer?/?' do
     answer = 0
   end
 
-  if checkReferer() then
+  if checkReferrer() then
 
     #answer to security question. If correct... vote is valid!
     vote_to_check = Vote.get(params[:id])
