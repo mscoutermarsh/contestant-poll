@@ -1,0 +1,28 @@
+#perl script to automate git push
+`git add . >/dev/null`;
+print "add\n";
+print "Commit Message:";
+$cmsg = <>;
+`git commit -m '$cmsg' >/dev/null`;
+print "\npushing to github...\n";
+print "#################################\n";
+`git push > /dev/null`;
+print "#################################\n";
+
+my $heroku;
+$valid = 0;
+while (!$valid) {
+  print "\nPush to Heroku(Y/n)? ";
+  $heroku = <STDIN>;
+  if ($heroku =~ /^Y|^n+/){
+  	$valid = 1;
+  }
+}
+if ($heroku =~ /^Y+/ ) {
+	#also push to heroku
+	print "\npushing to heroku...\n";
+	print "#################################\n";
+	`git push heroku master >/dev/null`;
+	print "#################################\n";
+}
+print "\ndone\n"
